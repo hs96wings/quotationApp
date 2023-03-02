@@ -7,27 +7,32 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        String s, quote, author;
         int id = 1;
         List<Quotation> quotationList = new ArrayList<>();
 
         System.out.println("== 명언 앱 ==");
         while (true) {
             System.out.print("명령) ");
-            s = scanner.nextLine();
+            String op = scanner.nextLine();
 
-            if (s.equals("종료")) {
+            if (op.equals("종료")) {
                 break;
-            } else if (s.equals("등록")) {
+            } else if (op.equals("등록")) {
                 System.out.print("명언 : ");
-                quote = scanner.nextLine();
+                String quote = scanner.nextLine();
                 System.out.print("작가 : ");
-                author = scanner.nextLine();
-                System.out.println(id + "번 명령이 등록되었습니다.");
+                String author = scanner.nextLine();
 
                 Quotation q = new Quotation(id, quote, author);
                 quotationList.add(q);
-                id++;
+                System.out.println(id++ + "번 명령이 등록되었습니다.");
+            } else if (op.equals("목록")) {
+                System.out.println("번호 / 작가 / 명언");
+                System.out.println("----------------------");
+
+                for (Quotation q : quotationList) {
+                    q.print();
+                }
             } else {
                 System.out.println("잘못된 명령입니다");
             }
@@ -44,5 +49,9 @@ class Quotation {
         this.id = id;
         this.quote = quote;
         this.author = author;
+    }
+
+    public void print() {
+        System.out.printf("%d / %s / %s\n", this.id, this.quote, this.author);
     }
 }
