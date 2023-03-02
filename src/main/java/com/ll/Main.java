@@ -13,13 +13,15 @@ import com.google.gson.JsonObject;
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
-        int id = 1;
-        List<Quotation> quotationList = new ArrayList<>();
 
         String filename = "data.dat";
         FileInputStream fis = new FileInputStream(filename);
         ObjectInputStream ois = new ObjectInputStream(fis);
-        quotationList = (List<Quotation>) ois.readObject();
+        List<Quotation> quotationList = (List<Quotation>) ois.readObject();
+        int id = quotationList.size() + 1;
+
+        ois.close();
+        fis.close();
 
         System.out.println("== 명언 앱 ==");
         while (true) {
@@ -30,6 +32,8 @@ public class Main {
                 FileOutputStream fos = new FileOutputStream(filename);
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
                 oos.writeObject(quotationList);
+                oos.close();
+                fos.close();
                 break;
             } else if (op.equals("등록")) {
                 System.out.print("명언 : ");
@@ -73,7 +77,17 @@ public class Main {
                     q.setQuote(newQuote);
                     q.setAuthor(newAuthor);
                 }
+            } else if (op.equals("빌드")) {
+                Gson gson = new Gson();
+//                Gson gson = new GsonBuilder().setPrettyPrinting().create();
+                String quotationJson = gson.toJson(quotationList);
 
+                FileOutputStream fos = new FileOutputStream("data.json");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(quotationJson);
+                oos.close();
+                fos.close();
+                System.out.println("data.json 파일의 내용이 갱신되었습니다.");
             }
         }
     }
