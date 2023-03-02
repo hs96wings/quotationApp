@@ -9,6 +9,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String s, quote, author;
         int id = 1;
+        List<Quotation> quotationList = new ArrayList<>();
 
         System.out.println("== 명언 앱 ==");
         while (true) {
@@ -23,6 +24,10 @@ public class Main {
                 System.out.print("작가 : ");
                 author = scanner.nextLine();
                 System.out.println(id + "번 명령이 등록되었습니다.");
+
+                Quotation q = new Quotation(id, quote, author);
+                quotationList.add(q);
+                id++;
             } else {
                 System.out.println("잘못된 명령입니다");
             }
