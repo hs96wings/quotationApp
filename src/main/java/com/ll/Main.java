@@ -7,21 +7,24 @@ import java.util.Scanner;
 
 // JSON 생성을 위한 Import
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonObject;
 
 public class Main {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
 
         String filename = "data.dat";
-        FileInputStream fis = new FileInputStream(filename);
-        ObjectInputStream ois = new ObjectInputStream(fis);
-        List<Quotation> quotationList = (List<Quotation>) ois.readObject();
-        int id = quotationList.size() + 1;
+        List<Quotation> quotationList;
+        try {
+            FileInputStream fis = new FileInputStream(filename);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+            quotationList = (List<Quotation>) ois.readObject();
 
-        ois.close();
-        fis.close();
+            ois.close();
+            fis.close();
+        } catch (Exception e) {
+            quotationList = new ArrayList<>();
+        }
+        int id = quotationList.size() + 1;
 
         System.out.println("== 명언 앱 ==");
         while (true) {
