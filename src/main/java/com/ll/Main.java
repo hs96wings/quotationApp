@@ -44,6 +44,22 @@ public class Main {
                 } else {
                     System.out.println((idx + 1) + "번 명령은 존재하지 않습니다.");
                 }
+            } else if (op.contains("수정?id=")) {
+                int idx = op.charAt(op.length() - 1) - '0' - 1;
+
+                if (quotationList.size() > idx && quotationList.get(idx) != null) {
+                    Quotation q = quotationList.get(idx);
+                    System.out.println("명언(기존) : " + q.getQuote());
+                    System.out.print("명언 : ");
+                    String newQuote = scanner.nextLine();
+                    System.out.println("작가(기존) : " + q.getAuthor());
+                    System.out.print("작가 : ");
+                    String newAuthor = scanner.nextLine();
+
+                    q.setQuote(newQuote);
+                    q.setAuthor(newAuthor);
+                }
+
             }
         }
     }
@@ -61,6 +77,22 @@ class Quotation {
     }
 
     public void print() {
-        System.out.printf("%d / %s / %s\n", this.id, this.quote, this.author);
+        System.out.printf("%d / %s / %s\n", this.id, this.author, this.quote);
+    }
+
+    public String getQuote() {
+        return quote;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setQuote(String quote) {
+        this.quote = quote;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }
