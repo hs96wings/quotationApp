@@ -36,11 +36,13 @@ public class Main {
                         q.print();
                 }
             } else if (op.contains("삭제?id=")) {
-                int idx = op.charAt(op.length() - 1) - '0';
+                int idx = op.charAt(op.length() - 1) - '0' - 1;
 
                 if (quotationList.size() > idx && quotationList.get(idx) != null) {
-                    quotationList.set(idx - 1, null);
-                    System.out.println(idx + "번 명령이 삭제되었습니다.");
+                    quotationList.set(idx, null);
+                    System.out.println((idx + 1) + "번 명령이 삭제되었습니다.");
+                } else {
+                    System.out.println((idx + 1) + "번 명령은 존재하지 않습니다.");
                 }
             }
         }
