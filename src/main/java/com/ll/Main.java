@@ -30,11 +30,18 @@ public class Main {
                 System.out.println("번호 / 작가 / 명언");
                 System.out.println("----------------------");
 
-                for (Quotation q : quotationList) {
-                    q.print();
+                for (int i = quotationList.size() - 1; i >= 0; --i) {
+                    Quotation q = quotationList.get(i);
+                    if (q != null)
+                        q.print();
                 }
-            } else {
-                System.out.println("잘못된 명령입니다");
+            } else if (op.contains("삭제?id=")) {
+                int idx = op.charAt(op.length() - 1) - '0';
+
+                if (quotationList.size() > idx && quotationList.get(idx) != null) {
+                    quotationList.set(idx - 1, null);
+                    System.out.println(idx + "번 명령이 삭제되었습니다.");
+                }
             }
         }
     }
