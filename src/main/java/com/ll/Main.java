@@ -1,14 +1,25 @@
 package com.ll;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+// JSON 생성을 위한 Import
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonObject;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
         int id = 1;
         List<Quotation> quotationList = new ArrayList<>();
+
+        String filename = "data.dat";
+        FileInputStream fis = new FileInputStream(filename);
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        quotationList = (List<Quotation>) ois.readObject();
 
         System.out.println("== 명언 앱 ==");
         while (true) {
@@ -16,6 +27,9 @@ public class Main {
             String op = scanner.nextLine();
 
             if (op.equals("종료")) {
+                FileOutputStream fos = new FileOutputStream(filename);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                oos.writeObject(quotationList);
                 break;
             } else if (op.equals("등록")) {
                 System.out.print("명언 : ");
@@ -65,7 +79,7 @@ public class Main {
     }
 }
 
-class Quotation {
+class Quotation implements Serializable {
     private int id;
     private String quote;
     private String author;
@@ -78,6 +92,10 @@ class Quotation {
 
     public void print() {
         System.out.printf("%d / %s / %s\n", this.id, this.author, this.quote);
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getQuote() {
